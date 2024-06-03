@@ -32,7 +32,8 @@ function MainPage() {
             setUserd(data);
             dispatch(addTasks(data.tasks))
             dispatch(addProjects(data.projects))
-
+            localStorage.setItem(`${user.uidUser}_projects`, JSON.stringify(data.projects));
+            localStorage.setItem(`${user.uidUser}_tasks`, JSON.stringify(data.tasks));
         }
     };
 
