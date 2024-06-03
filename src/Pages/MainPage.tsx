@@ -32,6 +32,7 @@ function MainPage() {
             setUserd(data);
             dispatch(addTasks(data.tasks))
             dispatch(addProjects(data.projects))
+
         }
     };
 
