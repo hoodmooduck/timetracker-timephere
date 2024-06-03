@@ -1,0 +1,44 @@
+.main-input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  color: var(--black);
+
+  input {
+    padding: 20px 10px;
+    border-radius: 4px;
+    font-size: 18px;
+    background: var(--black);
+    color: var(--white);
+
+    &:required + label {
+      top: 0;
+      transform: translate(0, -120%);
+      color: var(--black);
+    }
+
+    &:invalid + label {
+      top: auto;
+      transform: translate(0, 0%);
+      color: var(--white);
+    }
+
+    &:focus + label {
+      top: 0;
+      transform: translate(0, -120%);
+      color: var(--black);
+    }
+  }
+
+  label {
+    pointer-events: none;
+    transition: 0.3s;
+    position: absolute;
+    display: inline-block;
+    left: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--white);
+  }
+}

@@ -1,0 +1,105 @@
+.trackCard {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32px 24px;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 3px 3px 5px 0 var(--black);
+  background: var(--black);
+  transition: 0.3s;
+
+  &__isTracked {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: max-content;
+    color: var(--red);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::before {
+      content: '';
+      margin-right: 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      display: inline-block;
+      background: var(--red);
+    }
+
+    &--active {
+      color: var(--yellow);
+      &::before {
+        background: var(--yellow);
+      }
+    }
+  }
+
+  &__complete {
+    position: absolute;
+    top: unset;
+    right: 8px;
+    bottom: 8px;
+    height: max-content;
+    color: var(--green);
+
+    &::before {
+      background: var(--green);
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.01);
+
+    .trackCard__control {
+      transform: translate(-10%, 10%);
+    }
+  }
+
+  &__content {
+    width: 100%;
+    color: var(--white);
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: bold;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  &__description {
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+
+  &__control {
+    display: flex;
+    right: 0;
+    top: 0;
+    position: absolute;
+    transform: translate(100%, 0);
+    transition: 0.3s;
+  }
+
+  &__tags {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    &-item {
+      background: var(--red);
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.tag {
+  padding: 5px 10px;
+  width: max-content;
+  border-radius: 10px;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}

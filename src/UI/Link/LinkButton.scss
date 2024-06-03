@@ -1,0 +1,23 @@
+.link-button {
+  width: max-content;
+  color: var(--black);
+  font-weight: bold;
+  font-size: 20px;
+  opacity: 0.7;
+  border-radius: 5px;
+  transition: 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  &:hover {
+    opacity: 1;
+    cursor: pointer;
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}
