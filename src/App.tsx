@@ -1,7 +1,6 @@
 import "./index.scss";
 import React from "react";
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import UI from "./Pages/UI.tsx";
 import MainPage from "./Pages/MainPage.tsx";
 import NotFound from "./Pages/NotFoundPage.tsx";
 import AuthPage from "./Pages/AuthPage.tsx";
@@ -19,7 +18,6 @@ function App() {
                 <Routes>
                     <Route path='' element={<AuthPage/>}></Route>
                     <Route path='/main/' element={<MainPage/>}></Route>
-                    <Route path='/ui/' element={<UI/>}></Route>
                     <Route path='*' element={<NotFound/>}></Route>
                     <Route path='/main/project/:id' element={<ProjectPage />}/>
                     <Route path='/main/complete' element={<CompleteTasksPage />}/>
