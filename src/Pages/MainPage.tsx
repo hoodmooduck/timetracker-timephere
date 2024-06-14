@@ -30,10 +30,8 @@ function MainPage() {
         const data: any = await getUserData(userd.uid);
         if (data) {
             setUserd(data);
-            // обноление стейта(состояния) трекера
             dispatch(addTasks(data.tasks))
             dispatch(addProjects(data.projects))
-            // кэширование
             localStorage.setItem(`${user.uidUser}_projects`, JSON.stringify(data.projects));
             localStorage.setItem(`${user.uidUser}_tasks`, JSON.stringify(data.tasks));
         }

@@ -22,6 +22,7 @@ function ProjectsList({projects, openModal}: Props) {
                             key={el.id}
                             id={el.id}
                             name={el.name}
+                            tasks={el.tasks}
                         />
                     ))
                 }
