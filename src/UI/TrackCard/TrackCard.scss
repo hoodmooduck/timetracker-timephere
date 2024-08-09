@@ -10,7 +10,40 @@
   overflow: hidden;
   box-shadow: 3px 3px 5px 0 var(--black);
   background: var(--black);
+  color: var(--white);
   transition: 0.3s;
+  text-transform: uppercase;
+  //
+  //&__svg {
+  //  width: 48px;
+  //  height: 48px;
+  //  color: var(--black);
+  //
+  //  &:hover {
+  //    transition: .3s;
+  //    transform: scale(1.1);
+  //  }
+  //}
+
+  &-open {
+    background: var(--white);
+    color: var(--black);
+    padding-bottom: 60px;
+
+    .trackCard__controlPanel {
+      opacity: 1;
+    }
+  }
+
+  &__controlPanel {
+    padding: 10px 24px;
+    border-top: 1px solid var(--black);
+    width: 100%;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    opacity: 0;
+  }
 
   &__isTracked {
     position: absolute;
@@ -44,9 +77,8 @@
 
   &__complete {
     position: absolute;
-    top: unset;
     right: 8px;
-    bottom: 8px;
+    top: 8px;
     height: max-content;
     color: var(--green);
 
@@ -66,7 +98,6 @@
 
   &__content {
     width: 100%;
-    color: var(--white);
   }
 
   &__title {

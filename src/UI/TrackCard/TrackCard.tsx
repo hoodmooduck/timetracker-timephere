@@ -1,41 +1,47 @@
 import "./TrackCard.scss";
-
-// import {ReactSVG} from "react-svg";
+import StatusBlock from "./StatusBlock/StatusBlock.tsx";
+import { useEffect, useState } from "react";
+import { Statuses } from "./StatusBlock/types.ts";
 
 interface TrackCardProps {
   props: tasksType;
-  setActiveTask?: () => void;
+  setActiveTask: () => void;
+  active: boolean;
 }
 
-const TrackCard = ({ props, setActiveTask }: TrackCardProps) => {
+const TrackCard = ({ props, setActiveTask, active }: TrackCardProps) => {
+  const handleClickCard = () => {
+    setActiveTask();
+  };
+
+  const [status, setStatus] = useState<Statuses>("InProgress");
+
+  useEffect(() => {
+    if (props.complete) setStatus("Complete");
+    else if (props.startTime) setStatus("Tracking");
+    else setStatus("InProgress");
+  }, [props.complete, props.startTime]);
+
   return (
-    <div onClick={setActiveTask} className="trackCard">
-      {!props.complete ? (
-        <div
-          className={
-            props.startTime
-              ? "trackCard__isTracked trackCard__isTracked--active"
-              : "trackCard__isTracked"
-          }
-        >
-          {props.startTime ? "Выполняется" : "Не начата"}
-        </div>
-      ) : null}
+    <div
+      onClick={handleClickCard}
+      className={"trackCard" + `${active ? " trackCard-open" : ""}`}
+    >
+      <StatusBlock status={status} />
 
       <div className="trackCard__content">
         <h2 className="trackCard__title">{props.name}</h2>
         <p className="trackCard__description">{props.description}</p>
-        Трекинг задачи:{" "}
-        <span className="trackCard__description">
-          [{props.tracking} мин.]
-        </span>{" "}
-        из <span className="trackCard__description">[{props.time} мин.]</span>
       </div>
-      {props.complete ? (
-        <div className="trackCard__complete trackCard__isTracked">
-          Выполнена
-        </div>
-      ) : null}
+      <div className="trackCard__controlPanel">
+        <span>
+          <span className="trackCard__description">
+            [{props.tracking} мин.]
+          </span>
+          &nbsp;из&nbsp;
+          <span className="trackCard__description">[{props.time} мин.]</span>
+        </span>
+      </div>
     </div>
   );
 };

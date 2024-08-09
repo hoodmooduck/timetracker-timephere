@@ -3,62 +3,51 @@ import React, { useState } from "react";
 import Header from "../Components/Header/Header.tsx";
 import TrackCard from "../UI/TrackCard/TrackCard.tsx";
 import Input from "../UI/Input/Input.tsx";
-import LinkButton from "../UI/Link/LinkButton.tsx";
 import Button from "../UI/Button/Button.tsx";
 import BigButton from "../UI/BigButton/BigButton.tsx";
-import trackCard from "../UI/TrackCard/TrackCard.tsx";
-
-type TrackerProps = {
-    title: string;
-    description: string;
-    tags: string[];
-    timer: number;
-};
 
 function UI() {
-    const [name, setName] = useState<string>("");
+  const [name, setName] = useState<string>("");
 
-    const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setName(e.target.value);
-    };
+  const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
+  };
 
-    const props: tasksType = {
-        id: 1,
-        projectId: 1,
-        name: 'string',
-        description: 'string',
-        time: 11,
-        tracking: 11,
-        startTime: 0,
-        complete: false
-    };
+  const props: tasksType = {
+    id: 1,
+    projectId: 1,
+    name: "string",
+    description: "string",
+    time: 11,
+    tracking: 11,
+    startTime: 0,
+    complete: false,
+  };
 
-    return (
-        <>
-            <Header></Header>
-            <div className="ui">
-                <Button text="new!" onClick={() => {}} />
-                <div className="container">
-                    <BigButton onClick={() => {}} />
-                </div>
-                <Button text="новый проект" onClick={() => {}} />
-                <LinkButton text="Ссылка" link="/" />
-                <LinkButton text="Ссылка@" link="/" />
-                <Input
-                    id="name"
-                    value={name}
-                    onChange={changeName}
-                    label="label"
-                    type="text"
-                />
-                <div className="container">
-                    <TrackCard props={props}></TrackCard>
-                    <TrackCard props={props}></TrackCard>
-                    <TrackCard props={props}></TrackCard>
-                </div>
-            </div>
-        </>
-    );
+  return (
+    <>
+      <Header></Header>
+      <div className="ui">
+        <Button text="new!" onClick={() => {}} />
+        <div className="container">
+          <BigButton onClick={() => {}} />
+        </div>
+        <Button text="новый проект" onClick={() => {}} />
+        <Input
+          id="name"
+          value={name}
+          onChange={changeName}
+          label="label"
+          type="text"
+        />
+        <div className="container">
+          <TrackCard props={props}></TrackCard>
+          <TrackCard props={props}></TrackCard>
+          <TrackCard props={props}></TrackCard>
+        </div>
+      </div>
+    </>
+  );
 }
 
 export default UI;

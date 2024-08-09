@@ -20,7 +20,8 @@
     "react-router-dom": "^6.23.1",
     "react-svg": "^16.1.34",
     "redux": "^5.0.1",
-    "sass": "^1.74.1"
+    "sass": "^1.74.1",
+    "vite-plugin-svgr": "^4.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
