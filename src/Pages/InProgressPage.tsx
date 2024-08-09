@@ -5,23 +5,21 @@ import {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 
 function CompleteTasksPage() {
+  const { fetching } = useAppSelector((state) => state.auth);
 
-    const {fetching} = useAppSelector(state => state.auth)
+  const navigate = useNavigate();
 
-    const navigate = useNavigate()
+  useEffect(() => {
+    if (!fetching) {
+      navigate("/");
+    }
+  }, []);
 
-
-    useEffect(() => {
-        if (!fetching) {
-            navigate('/')
-        }
-    }, []);
-
-    return (
-        <>
-            <InProgress />
-        </>
-    );
+  return (
+    <>
+      <InProgress />
+    </>
+  );
 }
 
 export default CompleteTasksPage;

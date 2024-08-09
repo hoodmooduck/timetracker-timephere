@@ -35,6 +35,7 @@
 
     &--active {
       color: var(--yellow);
+
       &::before {
         background: var(--yellow);
       }
@@ -97,6 +98,7 @@
 
     &-item {
       background: var(--red);
+
       &:not(:last-child) {
         margin-right: 5px;
       }

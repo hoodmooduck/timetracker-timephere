@@ -5,7 +5,7 @@ function MainPage() {
 
     return (
         <main className='auth-page'>
-            <Auth></Auth>
+            <Auth />
         </main>
     );
 }

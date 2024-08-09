@@ -36,7 +36,7 @@ const UserProfileTop = (props: UserProfileTopProps) => {
             <div onClick={onClick} className="user-profile-top__name">{props.name}</div>
             <div onClick={logout} className="user-profile-top__logout">
                 <ReactSVG src={logOutSVG}></ReactSVG>
-                <span>Log Out!</span>
+                <span>Выйти</span>
             </div>
         </div>
     );

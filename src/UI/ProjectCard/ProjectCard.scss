@@ -55,6 +55,7 @@
 
     &-item {
       background: var(--red);
+
       &:not(:last-child) {
         margin-right: 5px;
       }

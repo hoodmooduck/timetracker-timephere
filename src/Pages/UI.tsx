@@ -6,6 +6,7 @@ import Input from "../UI/Input/Input.tsx";
 import LinkButton from "../UI/Link/LinkButton.tsx";
 import Button from "../UI/Button/Button.tsx";
 import BigButton from "../UI/BigButton/BigButton.tsx";
+import trackCard from "../UI/TrackCard/TrackCard.tsx";
 
 type TrackerProps = {
     title: string;
@@ -21,12 +22,15 @@ function UI() {
         setName(e.target.value);
     };
 
-    const props: TrackerProps = {
-        title: "strings tringstri ngstring",
-        description:
-            "string string string string string string string string string string string string string string string ",
-        tags: ["ddd", "ddd", "ddd", "ddd", "ddd"],
-        timer: 20,
+    const props: tasksType = {
+        id: 1,
+        projectId: 1,
+        name: 'string',
+        description: 'string',
+        time: 11,
+        tracking: 11,
+        startTime: 0,
+        complete: false
     };
 
     return (
@@ -48,9 +52,9 @@ function UI() {
                     type="text"
                 />
                 <div className="container">
-                    <TrackCard {...props}></TrackCard>
-                    <TrackCard {...props}></TrackCard>
-                    <TrackCard {...props}></TrackCard>
+                    <TrackCard props={props}></TrackCard>
+                    <TrackCard props={props}></TrackCard>
+                    <TrackCard props={props}></TrackCard>
                 </div>
             </div>
         </>

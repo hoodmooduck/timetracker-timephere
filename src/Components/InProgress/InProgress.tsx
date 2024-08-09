@@ -39,7 +39,7 @@ function CompleteTasks() {
                 <h2 className='projects-list__title inprogres-tasks__title'>Задачи в процессе:</h2>
                 {
                     projects.map(proj => (
-                        <div  key={proj.id}>
+                        <div key={proj.id}>
                             {tasks.filter(t => !t.complete && t.projectId === proj.id).length === 0 ?
                                 null
                                 :
@@ -61,11 +61,9 @@ function CompleteTasks() {
                                     </div>
                                 </>
                             }
-
                         </div>
                     ))
                 }
-
             </div>
         </div>
     );
