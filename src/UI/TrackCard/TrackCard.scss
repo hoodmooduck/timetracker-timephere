@@ -13,6 +13,11 @@
   color: var(--white);
   transition: 0.3s;
   text-transform: uppercase;
+
+  @media (max-width: 767px) {
+    padding: 16px 12px;
+    border-radius: 10px;
+  }
   //
   //&__svg {
   //  width: 48px;
@@ -28,11 +33,15 @@
   &-open {
     background: var(--white);
     color: var(--black);
-    padding-bottom: 60px;
+    padding-bottom: 90px;
 
     .trackCard__controlPanel {
       opacity: 1;
     }
+  }
+
+  &__delete-btn {
+    background: var(--red);
   }
 
   &__controlPanel {
@@ -41,8 +50,16 @@
     width: 100%;
     display: flex;
     position: absolute;
+    align-items: center;
+    gap: 10px;
     bottom: 0;
     opacity: 0;
+
+    @media (max-width: 767px) {
+      padding: 10px 12px;
+      gap: unset;
+      justify-content: space-between;
+    }
   }
 
   &__isTracked {

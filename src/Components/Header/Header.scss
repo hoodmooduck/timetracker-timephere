@@ -2,9 +2,47 @@
   position: fixed;
   width: 100px;
   height: 100vh;
-  z-index: 100;
   padding: 10px;
   background: var(--black);
+  transition: .3s;
+  z-index: 1000;
+
+  &__burger {
+    width: 50%;
+    left: 5px;
+    top: 5px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 8px;
+    backdrop-filter: blur(10px);
+    background: rgba(153, 17, 153, 0.3);
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    transform: translate(240%);
+    justify-items: end;
+    border: 2px solid #282828;
+
+    span {
+      width: 100%;
+      display: block;
+      height: 4px;
+      background: var(--black);
+      border-radius: 100px;
+
+      &:first-child {
+        width: 60%;
+      }
+    }
+  }
+
+  @media (max-width: 767px) {
+    transform: translate(-120%);
+
+    &--active {
+      transform: translate(0%);
+    }
+  }
 
   &__link {
     width: 100%;
@@ -37,7 +75,7 @@
       z-index: 100;
     }
 
-    svg{
+    svg {
       background: var(--black);
       z-index: 100;
       position: relative;

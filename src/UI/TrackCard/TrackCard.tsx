@@ -2,6 +2,7 @@ import "./TrackCard.scss";
 import StatusBlock from "./StatusBlock/StatusBlock.tsx";
 import { useEffect, useState } from "react";
 import { Statuses } from "./StatusBlock/types.ts";
+import Button from "../Button/Button.tsx";
 
 interface TrackCardProps {
   props: tasksType;
@@ -28,12 +29,9 @@ const TrackCard = ({ props, setActiveTask, active }: TrackCardProps) => {
       className={"trackCard" + `${active ? " trackCard-open" : ""}`}
     >
       <StatusBlock status={status} />
-
       <div className="trackCard__content">
         <h2 className="trackCard__title">{props.name}</h2>
         <p className="trackCard__description">{props.description}</p>
-      </div>
-      <div className="trackCard__controlPanel">
         <span>
           <span className="trackCard__description">
             [{props.tracking} мин.]
@@ -42,6 +40,16 @@ const TrackCard = ({ props, setActiveTask, active }: TrackCardProps) => {
           <span className="trackCard__description">[{props.time} мин.]</span>
         </span>
       </div>
+      {active && (
+        <div className="trackCard__controlPanel">
+          <Button
+            classes="trackCard__change-btn"
+            disabled={props.complete}
+            text={"Изменить"}
+          />
+          <Button classes="trackCard__delete-btn" text={"Удалить"} />
+        </div>
+      )}
     </div>
   );
 };

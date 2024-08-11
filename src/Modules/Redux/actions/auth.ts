@@ -19,10 +19,12 @@ const Auth = createSlice({
     login(state, action) {
       state.isAuth = true;
       state.user = action.payload;
+      state.fetching = false;
     },
     registration(state, action) {
       state.isAuth = true;
       state.user = action.payload;
+      state.fetching = false;
     },
     logOut(state) {
       state.isAuth = false;

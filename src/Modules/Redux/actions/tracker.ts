@@ -7,7 +7,7 @@ interface TimeTrackerState {
   isTracking: boolean;
 }
 
-const initialState: TimeTrackerState = {
+export const initialActiveTaskState: TimeTrackerState = {
   activeTaskId: -1,
   time: 0,
   trackedTime: 0,
@@ -16,7 +16,7 @@ const initialState: TimeTrackerState = {
 
 const timeTrackerSlice = createSlice({
   name: "timeTracker",
-  initialState,
+  initialState: initialActiveTaskState,
   reducers: {
     setActiveTask(state, action) {
       state.activeTaskId = action.payload.id;
