@@ -11,7 +11,7 @@
     width: 50%;
     left: 5px;
     top: 5px;
-    display: grid;
+    display: none;
     grid-template-rows: 1fr 1fr;
     gap: 8px;
     backdrop-filter: blur(10px);
@@ -22,6 +22,10 @@
     transform: translate(240%);
     justify-items: end;
     border: 2px solid #282828;
+
+    @media (max-width: 767px) {
+      display: grid;
+    }
 
     span {
       width: 100%;
