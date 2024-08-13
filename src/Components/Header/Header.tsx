@@ -3,18 +3,21 @@ import "./Header.scss";
 import Logo from "/assets/svg/logo.svg";
 import Complete from "/assets/svg/complete.svg";
 import Exclamation from "/assets/svg/exclamation.svg";
+import Settings from "/assets/svg/settings.svg";
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 const Header = () => {
   const [active, setActive] = useState<boolean>(false);
 
+  const openSidePanel = () => {
+    setActive((val) => !val);
+  };
+
   return (
     <header className={`header${active ? " header--active" : ""}`}>
-      <div onClick={() => setActive((val) => !val)} className="header__burger">
-        <span />
-        <span />
-        <span />
+      <div onClick={openSidePanel} className="header__burger">
+        <ReactSVG src={Settings}></ReactSVG>
       </div>
       <div className="header__links">
         <NavLink to="/main/" className="header__link">

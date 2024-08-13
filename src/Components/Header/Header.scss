@@ -5,38 +5,31 @@
   padding: 10px;
   background: var(--black);
   transition: .3s;
-  z-index: 1000;
+  z-index: 109;
 
   &__burger {
     width: 50%;
+    padding: 3px;
     left: 5px;
     top: 5px;
     display: none;
-    grid-template-rows: 1fr 1fr;
-    gap: 8px;
     backdrop-filter: blur(10px);
-    background: rgba(153, 17, 153, 0.3);
-    padding: 10px;
+    background: var(--black25);
     border-radius: 10px;
     position: absolute;
     transform: translate(240%);
     justify-items: end;
-    border: 2px solid #282828;
+    border: 2px solid var(--white);
 
     @media (max-width: 767px) {
-      display: grid;
+      display: flex;
     }
 
-    span {
-      width: 100%;
-      display: block;
-      height: 4px;
-      background: var(--black);
-      border-radius: 100px;
-
-      &:first-child {
-        width: 60%;
-      }
+    svg {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      stroke: var(--white);
     }
   }
 
@@ -44,6 +37,7 @@
     transform: translate(-120%);
 
     &--active {
+      z-index: 111;
       transform: translate(0%);
     }
   }
@@ -80,6 +74,7 @@
     }
 
     svg {
+      max-width: 80px;
       background: var(--black);
       z-index: 100;
       position: relative;
@@ -109,3 +104,5 @@
     }
   }
 }
+
+

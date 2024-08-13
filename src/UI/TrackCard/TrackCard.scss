@@ -30,6 +30,15 @@
   //  }
   //}
 
+  .typing-dots {
+    margin-top: auto;
+    margin-left: 3px;
+
+    &__dot {
+      background: var(--yellow);
+    }
+  }
+
   &-open {
     background: var(--white);
     color: var(--black);
@@ -45,20 +54,19 @@
   }
 
   &__controlPanel {
+    position: absolute;
     padding: 10px 24px;
     border-top: 1px solid var(--black);
     width: 100%;
     display: flex;
-    position: absolute;
+    justify-content: flex-end;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     bottom: 0;
     opacity: 0;
 
     @media (max-width: 767px) {
       padding: 10px 12px;
-      gap: unset;
-      justify-content: space-between;
     }
   }
 
@@ -72,6 +80,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 80%;
 
     &::before {
       content: '';
