@@ -143,67 +143,70 @@ const TimeTrackerComponent = () => {
     }
   };
 
-  return activeTaskId && task ? (
-    <div className="tracker">
-      <Modal active={modal} setActive={() => setModal(false)}>
-        <GraphBLock
-          id={activeTaskId}
-          name={task.name}
-          time={task.time}
-          description={task.description}
-          track={task.tracking}
-        />
-      </Modal>
-      <div className="tracker__name">
-        Активная задача [№{task.id}]: {task.name}
+  return (
+    activeTaskId &&
+    task && (
+      <div className="tracker">
+        <Modal active={modal} setActive={() => setModal(false)}>
+          <GraphBLock
+            id={activeTaskId}
+            name={task.name}
+            time={task.time}
+            description={task.description}
+            track={task.tracking}
+          />
+        </Modal>
+        <div className="tracker__name">
+          Активная задача [№{task.id}]: {task.name}
+        </div>
+        <div className="tracker__time">
+          {task.startTime ? (
+            <>
+              {task.tracking >= task.time ? (
+                <>
+                  Трекинг → [{formatTime(0)} -{" "}
+                  <span className="tracker__overtime">overtime</span>]
+                </>
+              ) : (
+                <>
+                  Трекинг → [{formatTime(0)} -{" "}
+                  {formatTime(task.time - Math.floor(task.tracking))}]
+                </>
+              )}
+            </>
+          ) : null}
+        </div>
+        <div className="tracker__control">
+          <Button
+            classes={"tracker__button"}
+            disabled={task.startTime > 0 || task.complete}
+            text="Начать трекинг"
+            onClick={handleStartTracking}
+          />
+          <Button
+            classes={"tracker__button"}
+            disabled={task.startTime === 0 || task.complete}
+            text="Пауза"
+            onClick={handleStopTracking}
+          />
+        </div>
+        <div className="tracker__control">
+          <Button
+            classes={"tracker__button"}
+            disabled={task.complete}
+            text="Выполнить"
+            onClick={complete}
+          />
+          <Button
+            classes={"tracker__button"}
+            disabled={!task.complete}
+            text="Сводка"
+            onClick={() => setModal(true)}
+          />
+        </div>
       </div>
-      <div className="tracker__time">
-        {task.startTime ? (
-          <>
-            {task.tracking >= task.time ? (
-              <>
-                Трекинг → [{formatTime(0)} -{" "}
-                <span className="tracker__overtime">overtime</span>]
-              </>
-            ) : (
-              <>
-                Трекинг → [{formatTime(0)} -{" "}
-                {formatTime(task.time - Math.floor(task.tracking))}]
-              </>
-            )}
-          </>
-        ) : null}
-      </div>
-      <div className="tracker__control">
-        <Button
-          classes={"tracker__button"}
-          disabled={task.startTime > 0 || task.complete}
-          text="Начать трекинг"
-          onClick={handleStartTracking}
-        />
-        <Button
-          classes={"tracker__button"}
-          disabled={task.startTime === 0 || task.complete}
-          text="Пауза"
-          onClick={handleStopTracking}
-        />
-      </div>
-      <div className="tracker__control">
-        <Button
-          classes={"tracker__button"}
-          disabled={task.complete}
-          text="Выполнить"
-          onClick={complete}
-        />
-        <Button
-          classes={"tracker__button"}
-          disabled={!task.complete}
-          text="Сводка"
-          onClick={() => setModal(true)}
-        />
-      </div>
-    </div>
-  ) : null;
+    )
+  );
 };
 
 export default TimeTrackerComponent;
