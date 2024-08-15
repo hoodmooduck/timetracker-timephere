@@ -1,22 +1,31 @@
 import "./Tracker.scss";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../Modules/hooks/hooks-redux.ts";
-import { addTasks, changeTask } from "../../Modules/Redux/actions/tasks.ts";
+import { useAppSelector } from "../../Modules/hooks/hooks-redux.ts";
 import Button from "../../UI/Button/Button.tsx";
 import { useEffect, useState } from "react";
 import Modal from "../../UI/Modal/Modal.tsx";
 import GraphBLock from "../GraphBLock/GraphBLock.tsx";
-import { saveUserData } from "../../Modules/Firebase/database-requests.ts";
+import {
+  useGetUserDataQuery,
+  useSaveUserDataMutation,
+} from "../../Modules/Redux/API/ApiSlice.ts";
 
 const TimeTrackerComponent = () => {
-  const dispatch = useAppDispatch();
   const { activeTaskId } = useAppSelector((state) => state.tracker);
-  const { tasks } = useAppSelector((state) => state.tasks);
   const { user } = useAppSelector((state) => state.auth);
 
-  const task = tasks.filter((el) => el.id === activeTaskId)[0];
+  const changeTask = (newTask: tasksType) => {
+    return tasks.map((task) => (task.id === newTask.id ? newTask : task));
+  };
+
+  const { data, refetch } = useGetUserDataQuery(user.uidUser);
+  const [saveUserData] = useSaveUserDataMutation();
+
+  const tasks: tasksType[] = data?.tasks;
+  const projects: projectsTypes[] = data?.projects;
+  const task =
+    activeTaskId !== -1 && tasks.filter((el) => el.id === activeTaskId)[0];
+  if (!task) return;
+
   let startTime: number | null = null;
 
   const [modal, setModal] = useState<boolean>(false);
@@ -31,6 +40,7 @@ const TimeTrackerComponent = () => {
 
   useEffect(() => {
     handleSave();
+    refetch();
   }, [userd]);
 
   const handleStartTracking = () => {
@@ -48,30 +58,13 @@ const TimeTrackerComponent = () => {
         complete: task.complete,
       };
 
-      dispatch(changeTask(changedTask));
-      let _tasks = localStorage.getItem(`${user.uidUser}_tasks`);
-      if (_tasks) {
-        _tasks = JSON.parse(_tasks).map((task: tasksType) =>
-          task.id === changedTask.id ? changedTask : task
-        );
-        const l_projects = localStorage.getItem(`${user.uidUser}_projects`);
-        const l_tasks = localStorage.getItem(`${user.uidUser}_tasks`);
-
-        setUserd({
-          uid: user.uidUser,
-          tasks: l_tasks ? JSON.parse(l_tasks) : [],
-          projects: l_projects ? JSON.parse(l_projects) : [],
-        });
-      }
+      setUserd({
+        uid: user.uidUser,
+        tasks: changeTask(changedTask) || [],
+        projects: projects || [],
+      });
     }
   };
-
-  useEffect(() => {
-    const storedTasks = localStorage.getItem(`${user.uidUser}_tasks`);
-    if (storedTasks) {
-      dispatch(addTasks(JSON.parse(storedTasks)));
-    }
-  }, []);
 
   const complete = () => {
     const changedTask = {
@@ -85,22 +78,11 @@ const TimeTrackerComponent = () => {
       complete: true,
     };
 
-    dispatch(changeTask(changedTask));
-    let _tasks = localStorage.getItem(`${user.uidUser}_tasks`);
-    if (_tasks) {
-      _tasks = JSON.parse(_tasks).map((task: tasksType) =>
-        task.id === changedTask.id ? changedTask : task
-      );
-
-      const l_projects = localStorage.getItem(`${user.uidUser}_projects`);
-      const l_tasks = localStorage.getItem(`${user.uidUser}_tasks`);
-
-      setUserd({
-        uid: user.uidUser,
-        tasks: l_tasks ? JSON.parse(l_tasks) : [],
-        projects: l_projects ? JSON.parse(l_projects) : [],
-      });
-    }
+    setUserd({
+      uid: user.uidUser,
+      tasks: changeTask(changedTask) || [],
+      projects: projects || [],
+    });
   };
 
   const formatTime = (min: number) => {
@@ -134,7 +116,7 @@ const TimeTrackerComponent = () => {
       const totalTrackedTimeSec2 = (totalTrackedTimeSec % 60) / 60;
 
       if (task) {
-        const _changedTask = {
+        const changedTask = {
           id: task.id,
           name: task.name,
           description: task.description,
@@ -151,24 +133,12 @@ const TimeTrackerComponent = () => {
           complete: task.complete,
         };
 
-        dispatch(changeTask(_changedTask));
-        let _tasks = localStorage.getItem(`${user.uidUser}_tasks`);
-        if (_tasks) {
-          _tasks = JSON.parse(_tasks).map((task: tasksType) =>
-            task.id === _changedTask.id ? _changedTask : task
-          );
-        }
-
-        const l_projects = localStorage.getItem(`${user.uidUser}_projects`);
-        const l_tasks = localStorage.getItem(`${user.uidUser}_tasks`);
-
         setUserd({
           uid: user.uidUser,
-          tasks: l_tasks ? JSON.parse(l_tasks) : [],
-          projects: l_projects ? JSON.parse(l_projects) : [],
+          tasks: changeTask(changedTask) || [],
+          projects: projects || [],
         });
       }
-
       startTime = null;
     }
   };
