@@ -8,11 +8,15 @@ import { useEffect } from "react";
 import TrackCard from "../../UI/TrackCard/TrackCard.tsx";
 import UserProfileTop from "../UserProfileTop/UserProfileTop.tsx";
 import { setActiveTask } from "../../Modules/Redux/actions/tracker.ts";
+import { useGetUserDataQuery } from "../../Modules/Redux/API/ApiSlice.ts";
 
 function CompleteTasks() {
   const { isAuth, user } = useAppSelector((state) => state.auth);
-  const { tasks } = useAppSelector((state) => state.tasks);
   const activeTaskId = useAppSelector((state) => state.tracker.activeTaskId);
+
+  const { data } = useGetUserDataQuery(user.uidUser);
+
+  const tasks: tasksType[] = data?.tasks;
 
   let navigate = useNavigate();
 

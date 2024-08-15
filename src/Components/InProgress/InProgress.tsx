@@ -7,13 +7,16 @@ import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import TrackCard from "../../UI/TrackCard/TrackCard.tsx";
 import { setActiveTask } from "../../Modules/Redux/actions/tracker.ts";
+import { useGetUserDataQuery } from "../../Modules/Redux/API/ApiSlice.ts";
 
 function CompleteTasks() {
-  const { isAuth } = useAppSelector((state) => state.auth);
-  const { tasks } = useAppSelector((state) => state.tasks);
-  const { projects } = useAppSelector((state) => state.projects);
-  const activeTaskId = useAppSelector((state) => state.tracker.activeTaskId);
+  const { isAuth, user } = useAppSelector((state) => state.auth);
+  const { activeTaskId } = useAppSelector((state) => state.tracker);
 
+  const { data } = useGetUserDataQuery(user.uidUser);
+
+  const tasks: tasksType[] = data?.tasks;
+  const projects: projectsTypes[] = data?.projects;
   let navigate = useNavigate();
 
   const dispatch = useAppDispatch();
