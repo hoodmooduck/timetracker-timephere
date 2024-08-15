@@ -33,7 +33,7 @@ function MainPage() {
     <AuthMainLayout>
       <main className="main-page">
         <Modal active={openModal} setActive={setOpenModal}>
-          <ModalCreateProject />
+          <ModalCreateProject closeModal={() => setOpenModal(false)} />
         </Modal>
         <div className="main-page__container">
           <ProjectsContainer projectOpenModal={setOpenModal} />

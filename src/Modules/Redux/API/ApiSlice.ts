@@ -8,7 +8,11 @@ export const apiSlice = createApi({
     getUserData: build.query({
       queryFn: async (uid: string) => {
         try {
-          const data = await getUserData(uid);
+          const data: any = await getUserData(uid);
+          if (data) {
+            data.projects = data.projects || [];
+            data.tasks = data.tasks || [];
+          }
           return { data };
         } catch (error: any) {
           return { error: { message: error.message } };

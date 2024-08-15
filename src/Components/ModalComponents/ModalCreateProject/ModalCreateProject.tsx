@@ -8,7 +8,11 @@ import {
   useSaveUserDataMutation,
 } from "../../../Modules/Redux/API/ApiSlice.ts";
 
-const ModalCreateProject = () => {
+interface ModalCreateProjectProps {
+  closeModal: () => void;
+}
+
+const ModalCreateProject = ({ closeModal }: ModalCreateProjectProps) => {
   const { user } = useAppSelector((state) => state.auth);
 
   const { data, refetch } = useGetUserDataQuery(user.uidUser);
@@ -42,7 +46,9 @@ const ModalCreateProject = () => {
     };
 
     saveUserData(_user);
+    setNameProject("");
     refetch();
+    closeModal();
   };
 
   return (

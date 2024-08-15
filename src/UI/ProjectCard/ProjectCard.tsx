@@ -1,23 +1,26 @@
 import "./ProjectCard.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAppSelector } from "../../Modules/hooks/hooks-redux.ts";
 import { useGetUserDataQuery } from "../../Modules/Redux/API/ApiSlice.ts";
 
 const ProjectCard: React.FC<projectsTypes> = (props: projectsTypes) => {
-  const { user } = useAppSelector((state) => state.auth);
+  const [color, setColor] = useState<string>("red");
 
+  const { user } = useAppSelector((state) => state.auth);
   const { data } = useGetUserDataQuery(user.uidUser);
 
   const tasks = data?.tasks.filter(
     (task: tasksType) => task.projectId === props.id
   );
 
-  const [color, setColor] = useState<string>("red");
-
-  const completedTasks = tasks.filter((task: tasksType) => {
-    task.projectId === props.id && task.complete;
-  }).length;
+  const completedTasks = useMemo(
+    () =>
+      tasks.filter((task: tasksType) => {
+        return task.complete;
+      }).length,
+    []
+  );
   const procents =
     completedTasks && ((completedTasks / tasks.length) * 100).toFixed(2);
 
@@ -31,7 +34,7 @@ const ProjectCard: React.FC<projectsTypes> = (props: projectsTypes) => {
     if (Number(procents) >= 100) {
       setColor("green");
     }
-  }, []);
+  }, [tasks, completedTasks]);
 
   return (
     <NavLink to={"/main/project/" + props.id} className="projectCard">

@@ -7,7 +7,11 @@ import { useParams } from "react-router-dom";
 import { saveUserData } from "../../../Modules/Firebase/database-requests.ts";
 import { useGetUserDataQuery } from "../../../Modules/Redux/API/ApiSlice.ts";
 
-const ModalCreateTask = () => {
+interface ModalCreateProjectProps {
+  closeModal: () => void;
+}
+
+const ModalCreateTask = ({ closeModal }: ModalCreateProjectProps) => {
   const { user } = useAppSelector((state) => state.auth);
 
   const { data, refetch } = useGetUserDataQuery(user.uidUser);
@@ -59,6 +63,10 @@ const ModalCreateTask = () => {
 
     saveUserData(_user);
     refetch();
+    closeModal();
+    setNameProject("");
+    setDescription("");
+    setTime("");
   };
 
   return (

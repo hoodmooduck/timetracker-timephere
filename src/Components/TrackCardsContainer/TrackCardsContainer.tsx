@@ -40,7 +40,7 @@ function TrackCardsContainer() {
   return (
     <div className="track-cards-container">
       <Modal active={openModal} setActive={setOpenModal}>
-        <ModalCreateTask />
+        <ModalCreateTask closeModal={() => setOpenModal(false)} />
       </Modal>
       <div className="track-cards-container__container">
         <BigButton onClick={() => setOpenModal(true)} />
