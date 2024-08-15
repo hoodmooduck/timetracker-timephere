@@ -24,7 +24,6 @@ const TimeTrackerComponent = () => {
   const projects: projectsTypes[] = data?.projects;
   const task =
     activeTaskId !== -1 && tasks.filter((el) => el.id === activeTaskId)[0];
-  if (!task) return;
 
   let startTime: number | null = null;
 
@@ -67,6 +66,7 @@ const TimeTrackerComponent = () => {
   };
 
   const complete = () => {
+    if (!task) return;
     const changedTask = {
       id: task.id,
       name: task.name,
@@ -86,6 +86,7 @@ const TimeTrackerComponent = () => {
   };
 
   const formatTime = (min: number) => {
+    if (!task) return;
     let date = new Date(task.startTime);
     let date_now = new Date();
     let hours = date.getHours();
@@ -109,6 +110,7 @@ const TimeTrackerComponent = () => {
   };
 
   const handleStopTracking = () => {
+    if (!task) return;
     if (task.startTime !== 0) {
       const totalTrackedTimeMs = Date.now() - task.startTime;
       const totalTrackedTimeSec = Math.floor(totalTrackedTimeMs / 1000);
