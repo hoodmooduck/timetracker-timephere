@@ -4,8 +4,10 @@ import Button from "../../../UI/Button/Button.tsx";
 import React, { useState } from "react";
 import { useAppSelector } from "../../../Modules/hooks/hooks-redux.ts";
 import { useParams } from "react-router-dom";
-import { saveUserData } from "../../../Modules/Firebase/database-requests.ts";
-import { useGetUserDataQuery } from "../../../Modules/Redux/API/ApiSlice.ts";
+import {
+  useGetUserDataQuery,
+  useSaveUserDataMutation,
+} from "../../../Modules/Redux/API/ApiSlice.ts";
 
 interface ModalCreateProjectProps {
   closeModal: () => void;
@@ -15,6 +17,7 @@ const ModalCreateTask = ({ closeModal }: ModalCreateProjectProps) => {
   const { user } = useAppSelector((state) => state.auth);
 
   const { data } = useGetUserDataQuery(user.uidUser);
+  const [saveUserData] = useSaveUserDataMutation();
 
   const tasks = data?.tasks;
   const projects = data?.projects;
