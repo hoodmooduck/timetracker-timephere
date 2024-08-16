@@ -15,7 +15,7 @@ interface ModalCreateProjectProps {
 const ModalCreateProject = ({ closeModal }: ModalCreateProjectProps) => {
   const { user } = useAppSelector((state) => state.auth);
 
-  const { data, refetch } = useGetUserDataQuery(user.uidUser);
+  const { data } = useGetUserDataQuery(user.uidUser);
   const [saveUserData] = useSaveUserDataMutation();
 
   const projects = data?.projects;
@@ -47,7 +47,6 @@ const ModalCreateProject = ({ closeModal }: ModalCreateProjectProps) => {
 
     saveUserData(_user);
     setNameProject("");
-    refetch();
     closeModal();
   };
 

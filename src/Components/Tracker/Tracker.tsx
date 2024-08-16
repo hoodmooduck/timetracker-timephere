@@ -17,7 +17,7 @@ const TimeTrackerComponent = () => {
     return tasks.map((task) => (task.id === newTask.id ? newTask : task));
   };
 
-  const { data, refetch } = useGetUserDataQuery(user.uidUser);
+  const { data } = useGetUserDataQuery(user.uidUser);
   const [saveUserData] = useSaveUserDataMutation();
 
   const tasks: tasksType[] = data?.tasks;
@@ -39,7 +39,6 @@ const TimeTrackerComponent = () => {
 
   useEffect(() => {
     handleSave();
-    refetch();
   }, [userd]);
 
   const handleStartTracking = () => {

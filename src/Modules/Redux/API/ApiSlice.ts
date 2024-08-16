@@ -4,6 +4,7 @@ import { getUserData, saveUserData } from "../../Firebase/database-requests.ts";
 export const apiSlice = createApi({
   reducerPath: "firebaseDatabaseRequests",
   baseQuery: fakeBaseQuery(),
+  tagTypes: ["userData"],
   endpoints: (build) => ({
     getUserData: build.query({
       queryFn: async (uid: string) => {
@@ -18,6 +19,7 @@ export const apiSlice = createApi({
           return { error: { message: error.message } };
         }
       },
+      providesTags: ["userData"],
     }),
     saveUserData: build.mutation({
       queryFn: async (userData: user | null) => {
@@ -28,6 +30,7 @@ export const apiSlice = createApi({
           return { error: { message: error.message } };
         }
       },
+      invalidatesTags: ['userData'],
     }),
   }),
 });
