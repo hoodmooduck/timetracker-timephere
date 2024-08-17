@@ -30,6 +30,7 @@
       height: 40px;
       border-radius: 8px;
       stroke: var(--white);
+      transition: .3s;
     }
   }
 
@@ -39,6 +40,12 @@
     &--active {
       z-index: 111;
       transform: translate(0%);
+
+      .header__burger {
+        svg {
+          transform: rotate(180deg);
+        }
+      }
     }
   }
 
@@ -67,6 +74,12 @@
       color: var(--white);
       position: absolute;
       padding: 15px 5px;
+    }
+
+    @media (max-width: 767px) {
+      span {
+        display: none;
+      }
     }
 
     div {

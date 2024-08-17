@@ -23,10 +23,11 @@ function CompleteTasks() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth || !tasks) {
       navigate("/");
     }
   }, []);
+
 
   const handleTaskClick = (id: number, time: number) => {
     const _activeTask = {
@@ -37,7 +38,7 @@ function CompleteTasks() {
     dispatch(setActiveTask(_activeTask));
   };
 
-  return (
+  return tasks && (
     <div className="complete-tasks">
       <UserProfileTop name={user.email} />
       <div className="complete-tasks__container">

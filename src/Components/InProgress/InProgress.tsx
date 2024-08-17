@@ -22,7 +22,7 @@ function CompleteTasks() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (!isAuth) {
+    if (!isAuth || !tasks) {
       navigate("/");
     }
   }, []);
@@ -36,7 +36,7 @@ function CompleteTasks() {
     dispatch(setActiveTask(_activeTask));
   };
 
-  return (
+  return tasks && (
     <div className="inprogres-tasks">
       <div className="inprogres-tasks__container">
         <h2 className="projects-list__title inprogres-tasks__title">
