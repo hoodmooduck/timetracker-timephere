@@ -8,9 +8,17 @@ interface TrackCardProps {
   props: tasksType;
   setActiveTask: () => void;
   active: boolean;
+  onDeleteTask: () => void;
+  onChangeTask: () => void;
 }
 
-const TrackCard = ({ props, setActiveTask, active }: TrackCardProps) => {
+const TrackCard = ({
+  props,
+  setActiveTask,
+  active,
+  onDeleteTask,
+  onChangeTask,
+}: TrackCardProps) => {
   const handleClickCard = () => {
     setActiveTask();
   };
@@ -45,9 +53,14 @@ const TrackCard = ({ props, setActiveTask, active }: TrackCardProps) => {
           <Button
             classes="trackCard__change-btn"
             disabled={props.complete}
-            text={"Изменить"}
+            onClick={onChangeTask}
+            text="Изменить"
           />
-          <Button classes="trackCard__delete-btn" text={"Удалить"} />
+          <Button
+            onClick={onDeleteTask}
+            classes="trackCard__delete-btn"
+            text="Удалить"
+          />
         </div>
       )}
     </div>
