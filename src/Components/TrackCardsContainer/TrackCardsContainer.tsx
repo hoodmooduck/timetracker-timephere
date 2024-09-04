@@ -10,11 +10,12 @@ import {
 } from "../../Modules/hooks/hooks-redux.ts";
 import { useParams } from "react-router-dom";
 import { setActiveTask } from "../../Modules/Redux/actions/tracker.ts";
-import {useGetUserDataQuery, useSaveUserDataMutation} from "../../Modules/Redux/API/ApiSlice.ts";
+import { useGetData } from "../../Modules/hooks/getData.ts";
 
 function TrackCardsContainer() {
   const id = useParams();
-  const { user } = useAppSelector((state) => state.auth);
+  const { getTasks } = useGetData();
+
 
   const activeTaskId = useAppSelector((state) => state.tracker.activeTaskId);
 
@@ -22,28 +23,9 @@ function TrackCardsContainer() {
 
   const [openModal, setOpenModal] = useState<boolean>(false);
 
-  const { data } = useGetUserDataQuery(user.uidUser);
-  const [saveUserData] = useSaveUserDataMutation();
-
-  const tasks = data?.tasks.filter(
+  const tasks = getTasks()?.filter(
     (task: tasksType) => task.projectId === Number(id.id)
   );
-
-  const deleteTask = () => {
-    const newListTasks = data?.tasks.filter(
-        (task: tasksType) => task.id !== Number(activeTaskId)
-    )
-    const newUserData = {
-      ...data,
-      tasks: newListTasks,
-    }
-    saveUserData(newUserData)
-  }
-  const changeTask = () => {
-    console.log(1234)
-  }
-
-
 
   const handleTaskClick = (id: number, time: number) => {
     const _activeTask = {
@@ -69,8 +51,6 @@ function TrackCardsContainer() {
               props={el}
               active={el.id === activeTaskId}
               setActiveTask={() => handleTaskClick(el.id, el.time)}
-              onChangeTask={changeTask}
-              onDeleteTask={deleteTask}
             />
           ))}
       </div>

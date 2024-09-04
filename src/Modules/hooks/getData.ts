@@ -5,15 +5,11 @@ export const useGetData = () => {
   const { user } = useAppSelector((state) => state.auth);
   const { data } = useGetUserDataQuery(user.uidUser);
 
-
   const getTasks = () => {
-    if (!data.tasks.length || !data.projects.length) {
-
-    }
-    return data.tasks;
+    return data?.tasks;
   };
   const getProjects = () => {
-    return data.projects;
+    return data?.projects;
   };
 
   return { getProjects, getTasks };
