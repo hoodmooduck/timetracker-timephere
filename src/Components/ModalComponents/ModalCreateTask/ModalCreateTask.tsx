@@ -2,15 +2,18 @@ import "./ModalCreateTask.scss";
 import Input from "../../../UI/Input/Input.tsx";
 import Button from "../../../UI/Button/Button.tsx";
 import React, { useState } from "react";
-import { useAppSelector } from "../../../Modules/hooks/hooks-redux.ts";
-import { useParams } from "react-router-dom";
+import {
+  useAppSelector,
+} from "../../../Modules/hooks/hooks-redux.ts";
 import {
   useGetUserDataQuery,
   useSaveUserDataMutation,
 } from "../../../Modules/Redux/API/ApiSlice.ts";
+import { useModalContext } from "../../../Modules/hooks/useModalContext.ts";
 
 const ModalCreateTask = () => {
   const { user } = useAppSelector((state) => state.auth);
+  const { activeProjectId } = useAppSelector((state) => state.activeProject);
 
   const { data } = useGetUserDataQuery(user.uidUser);
   const [saveUserData] = useSaveUserDataMutation();
@@ -18,7 +21,10 @@ const ModalCreateTask = () => {
   const tasks = data?.tasks;
   const projects = data?.projects;
 
-  const id = useParams();
+  const id = activeProjectId;
+
+  const { closeModal } = useModalContext();
+  const closeModalHandler = () => closeModal()
 
   const [nameProject, setNameProject] = useState<string>("");
   const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +51,7 @@ const ModalCreateTask = () => {
       name: nameProject,
       description: description,
       time: Number(time),
-      projectId: Number(id.id),
+      projectId: Number(id),
       tracking: 0,
       startTime: 0,
       complete: false,
@@ -64,6 +70,7 @@ const ModalCreateTask = () => {
     setNameProject("");
     setDescription("");
     setTime("");
+    closeModalHandler()
   };
 
   return (

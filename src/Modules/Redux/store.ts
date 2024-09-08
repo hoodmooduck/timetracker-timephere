@@ -4,6 +4,7 @@ import Projects from "./actions/projects.ts";
 import Tasks from "./actions/tasks.ts";
 import Tracker from "./actions/tracker.ts";
 import Modal from "./actions/modal.ts";
+import ActiveProject from "./actions/activeProject.ts";
 import { apiSlice } from "./API/ApiSlice.ts";
 import { loadingSlice } from "./API/loading.ts";
 
@@ -14,6 +15,7 @@ const store = configureStore({
     tasks: Tasks,
     tracker: Tracker,
     modal: Modal,
+    activeProject: ActiveProject,
     [apiSlice.reducerPath]: apiSlice.reducer,
     loading: loadingSlice.reducer,
   },
