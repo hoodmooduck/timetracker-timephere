@@ -1,24 +1,24 @@
 import "./Modal.scss";
-import React from "react";
 import {ReactSVG} from "react-svg";
 import close from "/assets/svg/close.svg"
+import {useAppDispatch, useAppSelector} from "../../Modules/hooks/hooks-redux.ts";
+import {closeModalHandler} from "../../Modules/Redux/actions/modal.ts";
+import {componentMap} from "../../Modules/hooks/useModalContext.ts";
 
-interface ModalProps {
-    children: React.ReactNode
-    active: boolean,
-    setActive: (value: boolean) => void
-}
+function Modal() {
+    const {openModal, componentKey} = useAppSelector(state => state.modal)
+    const dispatch = useAppDispatch();
 
-function Modal({children, active, setActive}: ModalProps) {
-
+    if (!openModal || !componentKey) return null;
+    const ComponentToRender = componentMap[componentKey];
 
     return (
-        <div className={active ? 'modal modal--active' : 'modal'}>
+        <div className={openModal ? 'modal modal--active' : 'modal'}>
             <div className='modal__view'>
-                <div onClick={() => setActive(false)} className="modal__close-btn">
+                <div onClick={() => dispatch(closeModalHandler())} className="modal__close-btn">
                     <ReactSVG src={close}></ReactSVG>
                 </div>
-                {children}
+                {ComponentToRender && <ComponentToRender />}
             </div>
         </div>
     )

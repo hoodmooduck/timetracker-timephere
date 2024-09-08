@@ -1,16 +1,22 @@
 import "./GraphBLock.scss";
 import { useEffect, useState } from "react";
+import { useAppSelector } from "../../Modules/hooks/hooks-redux.ts";
+import { useGetData } from "../../Modules/hooks/getData.ts";
 
-interface Props {
-  id: number;
-  name: string;
-  description: string;
-  time: number;
-  track: number;
-}
-
-function GraphBLock({ id, name, description, time, track }: Props) {
+function GraphBLock() {
   const [overtime, setOvertime] = useState<number>(0);
+  const { activeTaskId, time } = useAppSelector((state) => state.tracker);
+  const id = activeTaskId;
+
+  const { getTasks } = useGetData();
+
+  const activeTask: tasksType = getTasks()?.filter(
+    (task: tasksType) => Number(task.id) === activeTaskId
+  )[0];
+
+  const name = activeTask.name;
+  const description = activeTask.description;
+  const track = activeTask.tracking;
 
   const getStatistic = () => {
     setOvertime(Math.floor(time - track));
