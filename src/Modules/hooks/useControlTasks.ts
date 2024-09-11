@@ -25,27 +25,33 @@ export const useControlTasks = () => {
     saveUserData(newUserData);
   };
 
-  const changeTask = (name: string, description: string, time: string) => {
+  const changeTask = (
+    name: string,
+    description: string,
+    time: string,
+    checkChangesData: boolean
+  ) => {
+    if (checkChangesData) return;
     const changeTask = getTasks()?.filter(
-        (task: tasksType) => task.id === Number(activeTaskId)
-    )[0]
+      (task: tasksType) => task.id === Number(activeTaskId)
+    )[0];
     const changedTask = {
       ...changeTask,
       name,
       description,
       time: Number(time),
-    }
+    };
     const newListTasks = getTasks()?.filter(
-        (task: tasksType) => task.id !== Number(activeTaskId)
-    )
+      (task: tasksType) => task.id !== Number(activeTaskId)
+    );
     newListTasks.push(changedTask);
-    newListTasks.sort((a: tasksType, b: tasksType) => a.id > b.id ? 1 : -1);
+    newListTasks.sort((a: tasksType, b: tasksType) => (a.id > b.id ? 1 : -1));
     const newUserData = {
       ...data,
       tasks: newListTasks,
     };
     saveUserData(newUserData);
-  }
+  };
 
   return { deleteTask, changeTask };
 };

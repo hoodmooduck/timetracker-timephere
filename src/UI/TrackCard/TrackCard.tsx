@@ -39,14 +39,20 @@ const TrackCard = ({ props, setActiveTask, active }: TrackCardProps) => {
     setTime(e.target.value);
   };
 
+  const checkChanges =
+    props.name === nameProject &&
+      props.description === description &&
+      props.time.toString() === time;
+
   const handleChangeState = useCallback(() => {
     if (!changeState) {
       setChangeState(true);
       return;
     }
+
     setChangeState(false);
-    changeTask(nameProject, description, time);
-  }, [changeState, nameProject, description, time]);
+    changeTask(nameProject, description, time, checkChanges);
+  }, [changeState, nameProject, description, time, checkChanges]);
 
   useEffect(() => {
     if (props.complete) setStatus("Complete");
@@ -55,8 +61,8 @@ const TrackCard = ({ props, setActiveTask, active }: TrackCardProps) => {
   }, [props.complete, props.startTime]);
 
   useEffect(() => {
-    if(!active) {
-      setChangeState(false)
+    if (!active) {
+      setChangeState(false);
     }
   }, [active]);
 
