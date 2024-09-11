@@ -8,11 +8,13 @@ import ProjectPage from "./Pages/ProjectPage.tsx";
 import Tracker from "./Components/Tracker/Tracker.tsx";
 import CompleteTasksPage from "./Pages/CompleteTasksPage.tsx";
 import InProgressPage from "./Pages/InProgressPage.tsx";
+import Modal from "./UI/Modal/Modal.tsx";
 
 function App() {
   return (
     <React.StrictMode>
       <Tracker />
+      <Modal />
       <BrowserRouter>
         <Routes>
           <Route path="" element={<AuthPage />}></Route>

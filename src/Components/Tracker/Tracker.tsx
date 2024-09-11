@@ -2,12 +2,14 @@ import "./Tracker.scss";
 import { useAppSelector } from "../../Modules/hooks/hooks-redux.ts";
 import Button from "../../UI/Button/Button.tsx";
 import { useEffect, useState } from "react";
-import Modal from "../../UI/Modal/Modal.tsx";
-import GraphBLock from "../GraphBLock/GraphBLock.tsx";
 import {
   useGetUserDataQuery,
   useSaveUserDataMutation,
 } from "../../Modules/Redux/API/ApiSlice.ts";
+import {
+  componentNameMap,
+  useModalContext,
+} from "../../Modules/hooks/useModalContext.ts";
 
 const TimeTrackerComponent = () => {
   const { activeTaskId } = useAppSelector((state) => state.tracker);
@@ -20,14 +22,18 @@ const TimeTrackerComponent = () => {
   const { data } = useGetUserDataQuery(user.uidUser);
   const [saveUserData] = useSaveUserDataMutation();
 
+  const { openModal } = useModalContext();
+
+  const openModalHandler = () => {
+    openModal(componentNameMap.ModalStatistic);
+  };
+
   const tasks: tasksType[] = data?.tasks;
   const projects: projectsTypes[] = data?.projects;
   const task =
     activeTaskId !== -1 && tasks.filter((el) => el.id === activeTaskId)[0];
 
   let startTime: number | null = null;
-
-  const [modal, setModal] = useState<boolean>(false);
 
   const [userd, setUserd] = useState<user | null>(null);
 
@@ -148,15 +154,6 @@ const TimeTrackerComponent = () => {
     activeTaskId &&
     task && (
       <div className="tracker">
-        <Modal active={modal} setActive={() => setModal(false)}>
-          <GraphBLock
-            id={activeTaskId}
-            name={task.name}
-            time={task.time}
-            description={task.description}
-            track={task.tracking}
-          />
-        </Modal>
         <div className="tracker__name">
           Активная задача [№{task.id}]: {task.name}
         </div>
@@ -202,7 +199,7 @@ const TimeTrackerComponent = () => {
             classes={"tracker__button"}
             disabled={!task.complete}
             text="Сводка"
-            onClick={() => setModal(true)}
+            onClick={openModalHandler}
           />
         </div>
       </div>

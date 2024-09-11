@@ -7,12 +7,9 @@ import {
   useGetUserDataQuery,
   useSaveUserDataMutation,
 } from "../../../Modules/Redux/API/ApiSlice.ts";
+import {useModalContext} from "../../../Modules/hooks/useModalContext.ts";
 
-interface ModalCreateProjectProps {
-  closeModal: () => void;
-}
-
-const ModalCreateProject = ({ closeModal }: ModalCreateProjectProps) => {
+const ModalCreateProject = () => {
   const { user } = useAppSelector((state) => state.auth);
 
   const { data } = useGetUserDataQuery(user.uidUser);
@@ -20,6 +17,9 @@ const ModalCreateProject = ({ closeModal }: ModalCreateProjectProps) => {
 
   const projects = data?.projects;
   const tasks = data?.tasks;
+
+  const { closeModal } = useModalContext();
+  const closeModalHandler = () => closeModal()
 
   const [nameProject, setNameProject] = useState<string>("");
   const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,7 +47,7 @@ const ModalCreateProject = ({ closeModal }: ModalCreateProjectProps) => {
 
     saveUserData(_user);
     setNameProject("");
-    closeModal();
+    closeModalHandler()
   };
 
   return (
