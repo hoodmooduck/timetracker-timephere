@@ -25,11 +25,26 @@ export const useControlTasks = () => {
     saveUserData(newUserData);
   };
 
-  const changeTask = () => {
-    const newListTasks = getTasks()?.filter(
+  const changeTask = (name: string, description: string, time: string) => {
+    const changeTask = getTasks()?.filter(
         (task: tasksType) => task.id === Number(activeTaskId)
+    )[0]
+    const changedTask = {
+      ...changeTask,
+      name,
+      description,
+      time: Number(time),
+    }
+    const newListTasks = getTasks()?.filter(
+        (task: tasksType) => task.id !== Number(activeTaskId)
     )
-    console.log(newListTasks)
+    newListTasks.push(changedTask);
+    newListTasks.sort((a: tasksType, b: tasksType) => a.id > b.id ? 1 : -1);
+    const newUserData = {
+      ...data,
+      tasks: newListTasks,
+    };
+    saveUserData(newUserData);
   }
 
   return { deleteTask, changeTask };

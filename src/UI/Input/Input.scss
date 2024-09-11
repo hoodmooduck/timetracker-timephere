@@ -12,6 +12,11 @@
     background: var(--black);
     color: var(--white);
 
+    &:disabled {
+      pointer-events: none;
+      background: transparent;
+    }
+
     &:required + label {
       top: 0;
       transform: translate(0, -120%);
