@@ -3,7 +3,10 @@ import BigButton from "../../UI/BigButton/BigButton.tsx";
 import ProjectsList from "./ProjectsList/ProjectsList.tsx";
 import { useAppSelector } from "../../Modules/hooks/hooks-redux.ts";
 import { useGetUserDataQuery } from "../../Modules/Redux/API/ApiSlice.ts";
-import {componentNameMap, useModalContext} from "../../Modules/hooks/useModalContext.ts";
+import {
+  componentNameMap,
+  useModalContext,
+} from "../../Modules/hooks/useModalContext.ts";
 
 function ProjectsContainer() {
   const { user } = useAppSelector((state) => state.auth);
@@ -22,10 +25,7 @@ function ProjectsContainer() {
     <div className="projects-container">
       {projects && projects.length ? (
         <div className="projects-container__content">
-          <ProjectsList
-            openModal={openModalHandler}
-            projects={projects}
-          />
+          <ProjectsList />
         </div>
       ) : (
         <div className="projects-container__init">
