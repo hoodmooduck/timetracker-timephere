@@ -1,10 +1,11 @@
 import "./Button.scss";
 
 interface ButtonProps {
-  text: string;
+  text?: string;
   classes?: string;
   disabled?: boolean;
   onClick?: () => void;
+  svg?: React.ReactNode
 }
 
 const Button: React.FC<ButtonProps> = (props) => {
@@ -15,6 +16,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       onClick={() => props.onClick && props.onClick()}
     >
       {props.text}
+      {props.svg}
     </button>
   );
 };

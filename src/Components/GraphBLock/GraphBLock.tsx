@@ -24,7 +24,7 @@ function GraphBLock() {
 
   useEffect(() => {
     getStatistic();
-  }, [id]);
+  }, [id, time]);
 
   return (
     <div className="graph-block">

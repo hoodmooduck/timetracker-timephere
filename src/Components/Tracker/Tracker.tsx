@@ -1,6 +1,8 @@
 import "./Tracker.scss";
 import { useAppSelector } from "../../Modules/hooks/hooks-redux.ts";
 import Button from "../../UI/Button/Button.tsx";
+import playSVG from "/assets/svg/play.svg";
+import pauseSVG from "/assets/svg/pause.svg";
 import { useEffect, useState } from "react";
 import {
   useGetUserDataQuery,
@@ -10,10 +12,14 @@ import {
   componentNameMap,
   useModalContext,
 } from "../../Modules/hooks/useModalContext.ts";
+import { ReactSVG } from "react-svg";
+import TrackerLine from "../../UI/TrackerLine/TrackerLine.tsx";
 
 const TimeTrackerComponent = () => {
   const { activeTaskId } = useAppSelector((state) => state.tracker);
   const { user } = useAppSelector((state) => state.auth);
+
+  const checkWindowSize = window.innerWidth > 768;
 
   const changeTask = (newTask: tasksType) => {
     return tasks.map((task) => (task.id === newTask.id ? newTask : task));
@@ -36,6 +42,9 @@ const TimeTrackerComponent = () => {
   let startTime: number | null = null;
 
   const [userd, setUserd] = useState<user | null>(null);
+  const [trackingStart, setTrackingStart] = useState<boolean>(
+    task && task.startTime !== 0
+  );
 
   const handleSave = async () => {
     if (user !== null) {
@@ -46,6 +55,68 @@ const TimeTrackerComponent = () => {
   useEffect(() => {
     handleSave();
   }, [userd]);
+
+  useEffect(() => {
+    if (task && task.startTime !== 0) {
+      setTrackingStart(false);
+    } else if (task) {
+      setTrackingStart(true);
+    }
+  }, [activeTaskId]);
+
+  const handleControlTaskFunctions = () => {
+    if (task && task.complete) {
+      openModalHandler();
+      return;
+    }
+    complete();
+  };
+
+  const handleControlTracking = () => {
+    setTrackingStart((val) => !val);
+
+    if (trackingStart) {
+      handleStartTracking();
+      return;
+    }
+    handleStopTracking();
+  };
+
+  const handleStopTracking = () => {
+    if (!task) return;
+    if (task.startTime !== 0) {
+      const totalTrackedTimeMs = Date.now() - task.startTime;
+      const totalTrackedTimeSec = Math.floor(totalTrackedTimeMs / 1000);
+      const totalTrackedTimeMin = Math.floor(totalTrackedTimeSec / 60);
+      const totalTrackedTimeSec2 = (totalTrackedTimeSec % 60) / 60;
+
+      if (task) {
+        const changedTask = {
+          id: task.id,
+          name: task.name,
+          description: task.description,
+          startTime: 0,
+          projectId: task.projectId,
+          time: task.time,
+          tracking: Number(
+            (
+              task.tracking +
+              totalTrackedTimeMin +
+              totalTrackedTimeSec2
+            ).toFixed(2)
+          ),
+          complete: task.complete,
+        };
+
+        setUserd({
+          uid: user.uidUser,
+          tasks: changeTask(changedTask) || [],
+          projects: projects || [],
+        });
+      }
+      startTime = null;
+    }
+  };
 
   const handleStartTracking = () => {
     startTime = Date.now();
@@ -90,118 +161,64 @@ const TimeTrackerComponent = () => {
     });
   };
 
-  const formatTime = (min: number) => {
-    if (!task) return;
-    let date = new Date(task.startTime);
-    let date_now = new Date();
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let minutes_now = date_now.getMinutes();
-
-    if (min !== 0) {
-      const h = Math.floor((min + minutes_now) / 60);
-      const m = Math.floor((minutes + min) % 60);
-
-      hours += h;
-      minutes = m;
-
-      if (hours >= 24) {
-        hours = hours % 24;
-      }
-      return `${("00" + hours).slice(-2)}:${("00" + minutes).slice(-2)}`;
-    } else {
-      return `${("00" + hours).slice(-2)}:${("00" + minutes).slice(-2)}`;
-    }
-  };
-
-  const handleStopTracking = () => {
-    if (!task) return;
-    if (task.startTime !== 0) {
-      const totalTrackedTimeMs = Date.now() - task.startTime;
-      const totalTrackedTimeSec = Math.floor(totalTrackedTimeMs / 1000);
-      const totalTrackedTimeMin = Math.floor(totalTrackedTimeSec / 60);
-      const totalTrackedTimeSec2 = (totalTrackedTimeSec % 60) / 60;
-
-      if (task) {
-        const changedTask = {
-          id: task.id,
-          name: task.name,
-          description: task.description,
-          startTime: 0,
-          projectId: task.projectId,
-          time: task.time,
-          tracking: Number(
-            (
-              task.tracking +
-              totalTrackedTimeMin +
-              totalTrackedTimeSec2
-            ).toFixed(2)
-          ),
-          complete: task.complete,
-        };
-
-        setUserd({
-          uid: user.uidUser,
-          tasks: changeTask(changedTask) || [],
-          projects: projects || [],
-        });
-      }
-      startTime = null;
-    }
-  };
+  // const formatTime = (min: number) => {
+  //   if (!task) return;
+  //   let date = new Date(task.startTime);
+  //   let date_now = new Date();
+  //   let hours = date.getHours();
+  //   let minutes = date.getMinutes();
+  //   let minutes_now = date_now.getMinutes();
+  //
+  //   if (min !== 0) {
+  //     const h = Math.floor((min + minutes_now) / 60);
+  //     const m = Math.floor((minutes + min) % 60);
+  //
+  //     hours += h;
+  //     minutes = m;
+  //
+  //     if (hours >= 24) {
+  //       hours = hours % 24;
+  //     }
+  //     return `${("00" + hours).slice(-2)}:${("00" + minutes).slice(-2)}`;
+  //   } else {
+  //     return `${("00" + hours).slice(-2)}:${("00" + minutes).slice(-2)}`;
+  //   }
+  // };
 
   return (
+    checkWindowSize &&
     activeTaskId &&
     task && (
       <div className="tracker">
-        <div className="tracker__name">
-          Активная задача [№{task.id}]: {task.name}
-        </div>
-        <div className="tracker__time">
-          {task.startTime ? (
-            <>
-              {task.tracking >= task.time ? (
-                <>
-                  Трекинг → [{formatTime(0)} -{" "}
-                  <span className="tracker__overtime">overtime</span>]
-                </>
-              ) : (
-                <>
-                  Трекинг → [{formatTime(0)} -{" "}
-                  {formatTime(task.time - Math.floor(task.tracking))}]
-                </>
-              )}
-            </>
-          ) : null}
-        </div>
-        <div className="tracker__control">
-          <Button
-            classes={"tracker__button"}
-            disabled={task.startTime > 0 || task.complete}
-            text="Начать трекинг"
-            onClick={handleStartTracking}
-          />
-          <Button
-            classes={"tracker__button"}
-            disabled={task.startTime === 0 || task.complete}
-            text="Пауза"
-            onClick={handleStopTracking}
+        <Button
+          classes={"tracker__button"}
+          onClick={handleControlTracking}
+          disabled={task.complete}
+          svg={
+            trackingStart ? (
+              <ReactSVG src={playSVG} />
+            ) : (
+              <ReactSVG src={pauseSVG} />
+            )
+          }
+        />
+        <div className="tracker__container">
+          <div className="tracker__name">
+            [№{task.id}]: {task.name}
+          </div>
+          <TrackerLine
+            startTime={task.startTime}
+            endTime={task.startTime + task.time}
+            trackTime={task.tracking}
+            time={task.time}
+            activeTaskId={activeTaskId}
           />
         </div>
-        <div className="tracker__control">
-          <Button
-            classes={"tracker__button"}
-            disabled={task.complete}
-            text="Выполнить"
-            onClick={complete}
-          />
-          <Button
-            classes={"tracker__button"}
-            disabled={!task.complete}
-            text="Сводка"
-            onClick={openModalHandler}
-          />
-        </div>
+        <Button
+          classes={"tracker__button"}
+          text={task.complete ? "Сводка" : "Выполнить"}
+          onClick={handleControlTaskFunctions}
+        />
       </div>
     )
   );

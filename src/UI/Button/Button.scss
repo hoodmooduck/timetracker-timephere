@@ -9,11 +9,15 @@
   transition: 0.25s;
   user-select: none;
   position: relative;
-  color: var(--white);
+
+  svg {
+    max-width: 18px;
+    min-width: 18px;
+  }
 
   &:hover {
     cursor: pointer;
-    transform: scale(1.05);
+    opacity: 0.9;
   }
 
   &:active {
@@ -27,5 +31,11 @@
   &:disabled {
     pointer-events: none;
     opacity: 0.7;
+  }
+
+  @media (max-width: 767px) {
+    &:hover {
+      transform: scale(1);
+    }
   }
 }

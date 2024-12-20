@@ -10,15 +10,13 @@ interface ProjectCardState {
   onClick: () => void;
 }
 
-const ProjectCard = ({id, name, onClick} : ProjectCardState) => {
+const ProjectCard = ({ id, name, onClick }: ProjectCardState) => {
   const [color, setColor] = useState<string>("red");
 
   const { user } = useAppSelector((state) => state.auth);
   const { data } = useGetUserDataQuery(user.uidUser);
 
-  const tasks = data?.tasks.filter(
-    (task: tasksType) => task.projectId === id
-  );
+  const tasks = data?.tasks.filter((task: tasksType) => task.projectId === id);
 
   const completedTasks = useMemo(
     () =>
@@ -46,7 +44,7 @@ const ProjectCard = ({id, name, onClick} : ProjectCardState) => {
     <NavLink
       onClick={onClick}
       to={"/main/project/" + id}
-      className="projectCard"
+      className="projectCard enchantment-effect"
     >
       <div className="projectCard__content">
         <h2 className="projectCard__title">{name}</h2>
