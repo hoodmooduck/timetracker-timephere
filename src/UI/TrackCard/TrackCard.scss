@@ -15,7 +15,7 @@
   text-transform: uppercase;
 
   @media (max-width: 767px) {
-    padding: 16px 12px;
+    padding: 16px 12px 24px 12px;
     border-radius: 10px;
   }
 
@@ -31,13 +31,17 @@
   &__input input {
     padding: 10px 0;
     color: var(--white);
-
+    margin-bottom: 4px;
   }
 
   &-open {
-    background: var(--white);
-    color: var(--black);
+    background: var(--purple);
     padding-bottom: 90px;
+
+    @media (max-width: 767px) {
+      padding-top: 30px;
+      padding-bottom: 30px;
+    }
 
     .trackCard__input input {
       padding: 10px;
@@ -45,11 +49,14 @@
 
     .trackCard__input input:disabled {
       padding: 10px 0;
-      color: var(--black);
     }
 
     .trackCard__controlPanel {
       opacity: 1;
+
+      .main-button {
+        border: 1px solid var(--white);
+      }
     }
   }
 
@@ -60,24 +67,24 @@
   &__controlPanel {
     position: absolute;
     padding: 10px 24px;
-    border-top: 1px solid var(--black);
+    border-top: 1px solid var(--white);
     width: 100%;
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
     bottom: 0;
     opacity: 0;
 
     @media (max-width: 767px) {
-      padding: 10px 12px;
+      display: none;
     }
   }
 
   &__isTracked {
     position: absolute;
-    right: 12px;
-    top: 12px;
+    right: 4px;
+    top: 4px;
     width: max-content;
     color: var(--red);
     font-weight: bold;
@@ -85,6 +92,13 @@
     align-items: center;
     justify-content: center;
     line-height: 80%;
+    background: var(--black);
+    padding: 10px;
+    border-radius: 24px;
+
+    @media (max-width: 767px) {
+      border-radius: 10px;
+    }
 
     &::before {
       content: '';
@@ -107,8 +121,8 @@
 
   &__complete {
     position: absolute;
-    right: 8px;
-    top: 8px;
+    right: 4px;
+    top: 4px;
     height: max-content;
     color: var(--green);
 
@@ -128,12 +142,12 @@
 
   &__content {
     width: 100%;
+    margin-top: 12px;
   }
 
   &__title {
     font-weight: bold;
     width: 100%;
-    margin-bottom: 12px;
 
     input {
       font-size: 24px;
@@ -142,7 +156,6 @@
 
   &__description {
     width: 100%;
-    margin-bottom: 12px;
 
     input {
       font-size: 16px;

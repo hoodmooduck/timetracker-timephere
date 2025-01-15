@@ -9,9 +9,10 @@
   --green-shadow: #379689;
   --main: #edf5e1;
   --blue-25: rgba(36, 0, 144, 0.75);
-  --red: #ff5050;
+  --red: #d53b3b;
   --yellow: #ffcd50;
-  --purple: rgba(153, 17, 153, 1);
+  --purple: #965fd4;
+  --purple-2: #734f9a;
 }
 
 * {
@@ -62,7 +63,7 @@ section {
 body {
   line-height: 1;
   position: relative;
-  background: #5cdb95;
+  background: var(--green);
 }
 
 ol,

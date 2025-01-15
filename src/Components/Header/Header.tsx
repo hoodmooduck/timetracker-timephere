@@ -20,7 +20,7 @@ const Header = () => {
         <ReactSVG src={Settings}></ReactSVG>
       </div>
       <div className="header__links">
-        <NavLink to="/main/" className="header__link">
+        <NavLink key="main" to="/main/" className="header__link">
           <ReactSVG src={Logo} />
           <span>На главную</span>
         </NavLink>
