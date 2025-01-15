@@ -11,7 +11,10 @@ export const componentNameMap = {
   ModalStatistic: "ModalStatistic",
 };
 
-export const componentMap: Record<string, React.ComponentType<never>> = {
+export const componentMap: Record<
+  string,
+  React.ComponentType<Record<string, never>>
+> = {
   [componentNameMap.ModalCreateTask]: ModalCreateTask,
   [componentNameMap.ModalCreateProject]: ModalCreateProject,
   [componentNameMap.ModalStatistic]: GraphBLock,
